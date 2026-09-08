@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: ta-currency-api
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build -w server
+    startCommand: npm run start -w server
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: CURRENCY_API_KEY
+        sync: false
+      - key: CLIENT_URL
+        sync: false

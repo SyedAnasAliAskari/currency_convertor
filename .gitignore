@@ -1,0 +1,14 @@
+node_modules/
+dist/
+client/dist/
+server/dist/
+.env
+.env.local
+.DS_Store
+*.log
+.netlify/
+
+
+*.tsbuildinfo
+client/vite.config.js
+client/vite.config.d.ts
