@@ -3,19 +3,32 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
+const DEFAULT_ALLOWED_ORIGINS = [
+  'http://localhost:5173',
+  'https://currency-convertor-client-livid.vercel.app',
+];
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = app.get(ConfigService);
-  const allowedOrigins = (config.get<string>('CLIENT_URL') ?? 'http://localhost:5173')
+  const configuredOrigins = (config.get<string>('CLIENT_URL') ?? '')
     .split(',')
-    .map((origin) => origin.trim())
+    .map((origin) => origin.trim().replace(/\/$/, ''))
     .filter(Boolean);
+  const allowedOrigins = [...new Set([...DEFAULT_ALLOWED_ORIGINS, ...configuredOrigins])];
 
   app.setGlobalPrefix('api');
-  app.enableCors({ origin: allowedOrigins, methods: ['GET'], credentials: false });
+  app.enableCors({
+    origin: allowedOrigins,
+    methods: ['GET', 'OPTIONS'],
+    allowedHeaders: ['Content-Type'],
+    credentials: false,
+    optionsSuccessStatus: 204,
+  });
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
 
-  await app.listen(config.get<number>('PORT') ?? 3000, '0.0.0.0');
+  const port = Number(config.get<string>('PORT')) || 3000;
+  await app.listen(port, '0.0.0.0');
 }
 
 void bootstrap();
