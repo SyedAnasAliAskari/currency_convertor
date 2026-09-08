@@ -1,11 +1,11 @@
-import type { ConversionResult, Currency } from './types';
+﻿import type { ConversionResult, Currency } from './types';
 
 const configuredApiUrl = import.meta.env.VITE_API_URL?.trim();
 const API_URL = (configuredApiUrl || (import.meta.env.DEV ? '/api' : '')).replace(/\/$/, '');
 
 async function request<T>(path: string): Promise<T> {
   if (!API_URL) {
-    throw new Error('The deployed API URL is missing. Set VITE_API_URL in Netlify and redeploy.');
+    throw new Error('The deployed API URL is missing. Set VITE_API_URL on your hosting provider and redeploy.');
   }
 
   let response: Response;
