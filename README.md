@@ -1,4 +1,4 @@
-# TA Solutions Currency Converter
+﻿# TA Solutions Currency Converter
 
 A mobile-first currency converter built with React, Bootstrap, and NestJS. It loads every currency supported by FreeCurrencyAPI, keeps a persistent local conversion history, and supports historical exchange rates.
 
@@ -26,7 +26,7 @@ A mobile-first currency converter built with React, Bootstrap, and NestJS. It lo
    npm install
    ```
 
-2. Copy `.env.example` to `server/.env` and add your API key:
+2. Copy `server/.env.example` to `server/.env` and add your API key:
 
    ```env
    CURRENCY_API_KEY=your_key_here
@@ -93,4 +93,3 @@ Do not commit `server/.env`; it is excluded by `.gitignore`.
 - `GET /api/currencies`
 - `GET /api/convert?from=USD&to=EUR&amount=100`
 - `GET /api/convert?from=USD&to=EUR&amount=100&date=2024-01-15`
-
